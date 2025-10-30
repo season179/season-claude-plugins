@@ -1,8 +1,6 @@
 ---
 name: Your Advanced Skill Name
 description: Brief description with specific action verbs and domain (max 200 chars)
-version: 1.0.0
-dependencies: python>=3.8, package-name>=version
 ---
 
 # Your Advanced Skill Name

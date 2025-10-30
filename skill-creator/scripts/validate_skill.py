@@ -236,25 +236,27 @@ class SkillValidator:
             ))
 
     def _validate_dependencies(self):
-        """Validate dependencies format"""
-        if 'dependencies' not in self.metadata:
-            return
+        """Validate dependencies are not in top-level frontmatter"""
+        if 'dependencies' in self.metadata:
+            self.issues.append(ValidationIssue(
+                'error',
+                "Dependencies field is not allowed at top level",
+                "Document dependencies in your README, requirements.txt, or in metadata field"
+            ))
 
-        deps = self.metadata['dependencies']
-        if not deps:
-            return
+        if 'version' in self.metadata:
+            self.issues.append(ValidationIssue(
+                'error',
+                "Version field is not allowed at top level",
+                "Use metadata.version instead or track versions in your README"
+            ))
 
-        # Check format: package>=version, another>=version
-        dep_pattern = r'^[\w\-\.]+(>=|==|<=|<|>)[\d\.]+$'
-
-        dep_list = [d.strip() for d in deps.split(',')]
-        for dep in dep_list:
-            if not re.match(dep_pattern, dep):
-                self.issues.append(ValidationIssue(
-                    'warning',
-                    f"Dependency may have incorrect format: '{dep}'",
-                    "Use format: package>=version or package==version"
-                ))
+        if 'author' in self.metadata:
+            self.issues.append(ValidationIssue(
+                'error',
+                "Author field is not allowed at top level",
+                "Use metadata.author instead if you want to track authorship"
+            ))
 
     def _validate_file_references(self):
         """Validate that referenced files exist"""
@@ -311,14 +313,6 @@ class SkillValidator:
                     "Skill.md has minimal content",
                     "Consider adding more detailed instructions and examples"
                 ))
-
-        # Check for version field
-        if 'version' not in self.metadata:
-            self.issues.append(ValidationIssue(
-                'info',
-                "No version field specified",
-                "Consider adding 'version: 1.0.0' to track iterations"
-            ))
 
         # Check for examples in content
         if 'example' not in self.content.lower():

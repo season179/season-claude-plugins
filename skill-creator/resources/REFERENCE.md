@@ -83,25 +83,34 @@ description: What this skill does and when to use it.
 ---
 name: Advanced Skill
 description: Does amazing things.
-version: 1.0.0
-dependencies: python>=3.8, numpy>=1.20.0, pandas>=1.5.0
+license: MIT
+allowed-tools:
+  - WebSearch
+  - WebFetch
+metadata:
+  version: 1.0.0
+  author: Your Name
 ---
 ```
 
-**version** (optional)
+**license** (optional)
 - Type: String
-- Format: Semantic versioning (MAJOR.MINOR.PATCH)
-- Purpose: Track iterations and breaking changes
-- Example: "1.0.0", "2.1.3"
+- Purpose: Specify the license for your skill
+- Examples: "MIT", "Apache-2.0", "GPL-3.0"
 
-**dependencies** (optional)
-- Type: String (comma-separated list)
-- Format: `package>=version` or `package==version`
-- Purpose: Document required packages for scripts
-- Supported: Python packages (pip), Node packages (npm)
-- Examples:
-  - `python>=3.8, pandas>=1.5.0, numpy>=1.20.0`
-  - `node>=18.0.0, axios>=1.0.0`
+**allowed-tools** (optional)
+- Type: Array of strings
+- Purpose: Specify which tools the skill is allowed to use
+- Examples: WebSearch, WebFetch, Bash, Read, Write, etc.
+
+**metadata** (optional)
+- Type: Object
+- Purpose: Store additional metadata about the skill
+- Common fields:
+  - `version`: Semantic versioning (e.g., "1.0.0")
+  - `author`: Creator of the skill
+  - `dependencies`: Required packages (document in skill body or README)
+  - Any other custom metadata you want to track
 
 ### Markdown Body
 
@@ -287,14 +296,24 @@ cd scripts && python analyzer.py <file-path>
 Check `scripts/requirements.txt` for dependencies.
 ```
 
-**Dependencies format:**
-```yaml
----
-dependencies: python>=3.8, pandas>=1.5.0, numpy>=1.20.0
----
+**Dependencies documentation:**
+Document required packages in your skill's markdown body, README, or in a `requirements.txt` file:
+```
+# scripts/requirements.txt
+pandas>=1.5.0
+numpy>=1.20.0
+requests>=2.28.0
 ```
 
-Supported packages include: pandas, numpy, matplotlib, requests, etc.
+You can also document dependencies in metadata:
+```yaml
+---
+name: My Skill
+description: Does things.
+metadata:
+  dependencies: "python>=3.8, pandas>=1.5.0, numpy>=1.20.0"
+---
+```
 
 #### JavaScript/Node.js Scripts
 
@@ -308,10 +327,14 @@ cd scripts && node processor.js <input-file>
 Install dependencies: `npm install`
 ```
 
-**Dependencies format:**
+**Dependencies documentation:**
+Include a `package.json` file in your scripts directory or document in metadata:
 ```yaml
 ---
-dependencies: node>=18.0.0, axios>=1.0.0, lodash>=4.17.0
+name: My Skill
+description: Does things.
+metadata:
+  dependencies: "node>=18.0.0, axios>=1.0.0, lodash>=4.17.0"
 ---
 ```
 
@@ -468,7 +491,17 @@ Look at the code and find problems.
 
 ### 4. Version Control
 
-Use semantic versioning:
+Use semantic versioning in metadata:
+```yaml
+---
+name: My Skill
+description: Does things.
+metadata:
+  version: 1.0.0
+---
+```
+
+Version numbering:
 - **MAJOR** (1.0.0 → 2.0.0): Breaking changes to structure or behavior
 - **MINOR** (1.0.0 → 1.1.0): New features, backwards compatible
 - **PATCH** (1.0.0 → 1.0.1): Bug fixes, clarifications
@@ -490,9 +523,10 @@ Include a README.md with:
 - Scripts: descriptive names like `analyzer.py`, not `script1.py`
 
 **Metadata:**
-- name: Title Case, descriptive
-- version: Semantic versioning
-- dependencies: Standard package names
+- name: Title Case, descriptive (max 64 chars)
+- description: Action-oriented, specific (max 200 chars)
+- metadata.version: Semantic versioning if tracking versions
+- license: Standard license identifiers (MIT, Apache-2.0, etc.)
 
 ## Troubleshooting
 

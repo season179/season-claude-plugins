@@ -21,7 +21,7 @@ This skill helps you:
 ### Creating a Basic Skill
 
 1. **Start with a template**: Use the basic skill template from `resources/templates/basic-skill.md`
-2. **Fill in metadata**: Set your skill's name, description, and version
+2. **Fill in metadata**: Set your skill's name and description (name max 64 chars, description max 200 chars)
 3. **Write instructions**: Add clear markdown instructions for Claude
 4. **Validate**: Run `python scripts/validate_skill.py <skill-path>`
 5. **Package**: Run `python scripts/package_skill.py <skill-path>`
@@ -39,7 +39,7 @@ For skills with helper scripts and resources:
 
 ### 1. Skill.md Structure
 
-Every skill needs a `Skill.md` file with:
+Every skill needs a `Skill.md` file with YAML frontmatter:
 
 ```yaml
 ---
@@ -49,6 +49,11 @@ description: Clear purpose and use cases (max 200 chars)
 ```
 
 **Critical**: The description field determines when Claude invokes your skill. Make it specific and action-oriented.
+
+**Optional fields** you can add:
+- `license`: Specify the license (e.g., "MIT")
+- `allowed-tools`: Array of tools the skill can use
+- `metadata`: Object for version, author, dependencies, etc.
 
 ### 2. File Organization
 
@@ -91,7 +96,7 @@ Bad: "A helpful tool for code stuff."
 1. **Single Responsibility**: Each skill should focus on one workflow or domain
 2. **Clear Instructions**: Write step-by-step instructions in the markdown body
 3. **Include Examples**: Show Claude how to use resources or run scripts
-4. **Version Your Skills**: Use semantic versioning to track changes
+4. **Track Versions**: Use metadata to track versions with semantic versioning (1.0.0, 1.1.0, etc.)
 5. **Test Thoroughly**: Test with multiple prompts before and after uploading
 6. **Reference Resources**: For extensive info, use separate REFERENCE.md files
 

@@ -1,7 +1,6 @@
 ---
 name: Your Skill Name
 description: Brief description of what this skill does (max 200 chars)
-version: 1.0.0
 ---
 
 # Your Skill Name
