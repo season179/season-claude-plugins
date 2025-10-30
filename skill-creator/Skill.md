@@ -1,8 +1,6 @@
 ---
-name: Skill Creator
+name: skill-creator
 description: Creates, validates, and packages Claude Code custom skills using templates, automation scripts, and best practices guidance.
-version: 1.0.0
-dependencies: python>=3.8
 ---
 
 # Skill Creator
@@ -47,8 +45,6 @@ Every skill needs a `Skill.md` file with:
 ---
 name: Your Skill Name (max 64 chars)
 description: Clear purpose and use cases (max 200 chars)
-version: 1.0.0
-dependencies: package>=version, another-package>=version
 ---
 ```
 

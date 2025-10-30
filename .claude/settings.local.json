@@ -9,7 +9,8 @@
       "Read(//Users/season/**)",
       "Bash(claude --version:*)",
       "Bash(python:*)",
-      "Bash(unzip:*)"
+      "Bash(unzip:*)",
+      "WebSearch"
     ],
     "deny": [],
     "ask": []
