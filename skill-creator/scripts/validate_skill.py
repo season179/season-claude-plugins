@@ -135,7 +135,22 @@ class SkillValidator:
                 continue
 
             key, value = line.split(':', 1)
-            self.metadata[key.strip()] = value.strip()
+            key = key.strip()
+            value = value.strip()
+            self.metadata[key] = value
+
+            # Check if value contains special YAML characters and isn't quoted
+            if key in ['description', 'name'] and value:
+                has_special_chars = any(char in value for char in [':', ';', '[', ']', '{', '}', '#'])
+                is_quoted = (value.startswith('"') and value.endswith('"')) or \
+                           (value.startswith("'") and value.endswith("'"))
+
+                if has_special_chars and not is_quoted:
+                    self.issues.append(ValidationIssue(
+                        'error',
+                        f"Field '{key}' contains special YAML characters but is not quoted",
+                        f"Wrap the {key} value in double quotes: {key}: \"your value here\""
+                    ))
 
     def _validate_required_fields(self):
         """Validate required metadata fields are present"""

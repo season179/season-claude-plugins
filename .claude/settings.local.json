@@ -11,7 +11,12 @@
       "Bash(python:*)",
       "Bash(unzip:*)",
       "WebSearch",
-      "Skill(skill-creator)"
+      "Skill(skill-creator)",
+      "Skill(n8n-workflow-builder)",
+      "Bash(env)",
+      "Bash(curl:*)",
+      "Bash(python3:*)",
+      "Bash(chmod:*)"
     ],
     "deny": [],
     "ask": []
