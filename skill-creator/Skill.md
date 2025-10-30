@@ -7,6 +7,11 @@ description: Creates, validates, and packages Claude Code custom skills using te
 
 A comprehensive tool for creating high-quality Claude Code custom skills. This skill provides templates, validation, packaging automation, and best practices to help you build effective skills quickly.
 
+## Communication Style
+- Be concise - provide only essential information
+- Avoid verbose explanations unless explicitly requested
+- Focus on actionable steps and key details
+
 ## What This Skill Does
 
 This skill helps you:

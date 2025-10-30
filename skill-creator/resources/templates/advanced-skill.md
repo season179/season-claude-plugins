@@ -7,6 +7,11 @@ description: Brief description with specific action verbs and domain (max 200 ch
 
 Comprehensive overview of this advanced skill's capabilities.
 
+## Communication Style
+- Be concise - provide only essential information
+- Avoid verbose explanations unless explicitly requested
+- Focus on actionable steps and key details
+
 ## Purpose
 
 Detailed explanation of:

@@ -7,6 +7,11 @@ description: Brief description of what this skill does (max 200 chars)
 
 Brief overview of what this skill helps with.
 
+## Communication Style
+- Be concise - provide only essential information
+- Avoid verbose explanations unless explicitly requested
+- Focus on actionable steps and key details
+
 ## Purpose
 
 Explain the specific problem or workflow this skill addresses.
