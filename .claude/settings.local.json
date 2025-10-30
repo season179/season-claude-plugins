@@ -10,7 +10,8 @@
       "Bash(claude --version:*)",
       "Bash(python:*)",
       "Bash(unzip:*)",
-      "WebSearch"
+      "WebSearch",
+      "Skill(skill-creator)"
     ],
     "deny": [],
     "ask": []
