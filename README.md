@@ -12,7 +12,7 @@ Claude Code skills are reusable tools that extend Claude's capabilities for spec
 
 ## Available Skills
 
-### Skill Creator
+### 1. Skill Creator
 
 **Expert tool for creating, validating, and packaging Claude Code custom skills.**
 
@@ -37,6 +37,21 @@ python skill-creator/scripts/package_skill.py my-skill/
 # Generate test plan
 python skill-creator/scripts/test_skill.py my-skill/
 ```
+
+### 2. n8n Workflow Builder
+
+**Helps build n8n workflows by selecting optimal nodes, configuring them correctly, and providing up-to-date documentation.**
+
+This skill:
+- Always fetches the latest n8n documentation
+- Recommends the best nodes for your workflow requirements
+- Provides detailed configuration instructions
+- Includes n8n expression syntax guidance
+- Suggests workflow patterns and best practices
+
+**Package**: [n8n-workflow-builder.zip](n8n-workflow-builder.zip)
+
+**Usage**: Just ask about building n8n workflows, and the skill will automatically be invoked!
 
 ## Repository Structure
 
@@ -85,7 +100,7 @@ Use the Skill Creator skill:
    ```
 
 2. **Edit the skill**:
-   - Fill in YAML frontmatter (name, description, version)
+   - Fill in YAML frontmatter (name in lowercase-with-hyphens, description)
    - Add instructions for Claude
    - Include examples
 
@@ -106,23 +121,36 @@ Use the Skill Creator skill:
 Every Claude Code skill must have:
 
 - **Skill.md file** with YAML frontmatter
-- **name** field (max 64 characters)
-- **description** field (max 200 characters)
+- **name** field: lowercase-with-hyphens format only (max 64 chars)
+  - ✅ Valid: `my-awesome-skill`, `python-analyzer`, `api-helper`
+  - ❌ Invalid: `My Awesome Skill`, `my_skill`, `MySkill`
+- **description** field: specific, action-oriented (max 200 chars)
 
-Example:
+**Minimal Example:**
 ```yaml
 ---
-name: My Awesome Skill
+name: my-awesome-skill
 description: Does specific things with particular technologies and use cases.
-version: 1.0.0
 ---
 
-# Instructions for Claude
+# My Awesome Skill
 
 When this skill is invoked:
 1. Do this
 2. Then this
 3. Finally this
+```
+
+**With Optional Fields:**
+```yaml
+---
+name: my-awesome-skill
+description: Does specific things with particular technologies and use cases.
+license: MIT
+metadata:
+  version: 1.0.0
+  author: Your Name
+---
 ```
 
 ## Best Practices
@@ -147,10 +175,12 @@ python skill-creator/scripts/validate_skill.py <skill-directory>
 Validates:
 - Skill.md exists and is valid
 - YAML frontmatter correct
+- Name format (lowercase-with-hyphens only)
 - Required fields present
 - Field length constraints
 - Description quality
 - File references
+- No invalid top-level fields (version, author, dependencies)
 
 ### Packaging Tool
 
@@ -229,7 +259,11 @@ Make description more specific with action verbs and domain keywords.
 
 ### Validation Errors
 
-Check YAML syntax, field lengths, and required fields.
+Common issues:
+- **Name format**: Must be lowercase-with-hyphens only
+- **Invalid fields**: `version`, `author`, `dependencies` not allowed at top level (use `metadata` instead)
+- **YAML syntax**: Check delimiters (`---`) and proper formatting
+- **Field lengths**: Name max 64 chars, description max 200 chars
 
 ### Packaging Issues
 
@@ -261,6 +295,13 @@ For help:
 4. Open an issue
 
 ## Changelog
+
+### 1.1.0 (2025-10-30)
+- Added n8n Workflow Builder skill
+- Fixed name format validation (must be lowercase-with-hyphens)
+- Updated validator to catch invalid top-level fields
+- Corrected all templates and documentation
+- Improved error messages with auto-suggestions
 
 ### 1.0.0 (2025-01-30)
 - Initial release
