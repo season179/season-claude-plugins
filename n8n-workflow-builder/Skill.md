@@ -1,5 +1,5 @@
 ---
-name: n8n Workflow Builder
+name: n8n-workflow-builder
 description: Helps build n8n workflows by selecting optimal nodes, configuring them correctly, and providing up-to-date documentation for workflow automation tasks.
 ---
 

@@ -1,5 +1,5 @@
 ---
-name: Your Skill Name
+name: your-skill-name
 description: Brief description of what this skill does (max 200 chars)
 ---
 

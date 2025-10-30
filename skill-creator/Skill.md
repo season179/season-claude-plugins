@@ -43,12 +43,16 @@ Every skill needs a `Skill.md` file with YAML frontmatter:
 
 ```yaml
 ---
-name: Your Skill Name (max 64 chars)
+name: your-skill-name
 description: Clear purpose and use cases (max 200 chars)
 ---
 ```
 
-**Critical**: The description field determines when Claude invokes your skill. Make it specific and action-oriented.
+**Critical Requirements**:
+- **name**: Must be lowercase letters, numbers, and hyphens only (max 64 chars)
+  - ✅ Good: `python-security-analyzer`, `api-doc-generator`, `n8n-workflow-builder`
+  - ❌ Bad: `Python Security Analyzer`, `API_Doc_Generator`, `My Skill!`
+- **description**: Determines when Claude invokes your skill - be specific and action-oriented
 
 **Optional fields** you can add:
 - `license`: Specify the license (e.g., "MIT")

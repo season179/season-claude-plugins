@@ -58,17 +58,19 @@ The `Skill.md` file must begin with YAML frontmatter.
 
 ```yaml
 ---
-name: Skill Name Here
+name: skill-name-here
 description: What this skill does and when to use it.
 ---
 ```
 
 **name** (required)
 - Type: String
+- Format: **lowercase letters, numbers, and hyphens only**
 - Max length: 64 characters
-- Purpose: Human-readable identifier
-- Best practice: Use title case, be descriptive
-- Examples: "Python Security Analyzer", "API Documentation Generator"
+- Purpose: Unique identifier for the skill
+- Examples: `python-security-analyzer`, `api-doc-generator`, `code-reviewer`
+- Invalid: `Python Security`, `API_Generator`, `My Skill!`
+- Note: You can use a human-readable title in the markdown heading (# Your Skill Title)
 
 **description** (required)
 - Type: String
@@ -81,7 +83,7 @@ description: What this skill does and when to use it.
 
 ```yaml
 ---
-name: Advanced Skill
+name: advanced-skill
 description: Does amazing things.
 license: MIT
 allowed-tools:
@@ -126,7 +128,7 @@ Example structure:
 
 ```markdown
 ---
-name: My Skill
+name: my-skill
 description: Does specific things.
 ---
 
@@ -308,7 +310,7 @@ requests>=2.28.0
 You can also document dependencies in metadata:
 ```yaml
 ---
-name: My Skill
+name: my-skill
 description: Does things.
 metadata:
   dependencies: "python>=3.8, pandas>=1.5.0, numpy>=1.20.0"
@@ -331,7 +333,7 @@ Install dependencies: `npm install`
 Include a `package.json` file in your scripts directory or document in metadata:
 ```yaml
 ---
-name: My Skill
+name: my-skill
 description: Does things.
 metadata:
   dependencies: "node>=18.0.0, axios>=1.0.0, lodash>=4.17.0"
@@ -494,7 +496,7 @@ Look at the code and find problems.
 Use semantic versioning in metadata:
 ```yaml
 ---
-name: My Skill
+name: my-skill
 description: Does things.
 metadata:
   version: 1.0.0
@@ -523,7 +525,7 @@ Include a README.md with:
 - Scripts: descriptive names like `analyzer.py`, not `script1.py`
 
 **Metadata:**
-- name: Title Case, descriptive (max 64 chars)
+- name: lowercase-with-hyphens format (max 64 chars)
 - description: Action-oriented, specific (max 200 chars)
 - metadata.version: Semantic versioning if tracking versions
 - license: Standard license identifiers (MIT, Apache-2.0, etc.)
@@ -567,6 +569,7 @@ Include a README.md with:
 
 **Common issues:**
 - Missing `---` delimiters around YAML
+- Name contains uppercase letters, spaces, or special characters (must be lowercase-with-hyphens)
 - Description exceeds 200 characters
 - Name exceeds 64 characters
 - Invalid YAML syntax (check indentation, colons, quotes)

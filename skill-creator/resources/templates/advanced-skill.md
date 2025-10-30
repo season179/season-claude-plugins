@@ -1,5 +1,5 @@
 ---
-name: Your Advanced Skill Name
+name: your-advanced-skill-name
 description: Brief description with specific action verbs and domain (max 200 chars)
 ---
 

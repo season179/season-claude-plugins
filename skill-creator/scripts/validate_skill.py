@@ -154,6 +154,15 @@ class SkillValidator:
         if 'name' in self.metadata:
             name = self.metadata['name']
             name_len = len(name)
+
+            # Check format: lowercase letters, numbers, and hyphens only
+            if not re.match(r'^[a-z0-9-]+$', name):
+                self.issues.append(ValidationIssue(
+                    'error',
+                    f"Skill name '{name}' can only contain lowercase letters, numbers, and hyphens",
+                    f"Try '{self._suggest_name_format(name)}'"
+                ))
+
             if name_len > 64:
                 self.issues.append(ValidationIssue(
                     'error',
@@ -188,6 +197,19 @@ class SkillValidator:
                     f"Description is quite short ({desc_len} chars)",
                     "Add more details to help Claude understand when to invoke this skill"
                 ))
+
+    def _suggest_name_format(self, name: str) -> str:
+        """Suggest a properly formatted name"""
+        # Convert to lowercase, replace spaces and underscores with hyphens
+        suggested = name.lower()
+        suggested = re.sub(r'[_\s]+', '-', suggested)
+        # Remove any characters that aren't lowercase letters, numbers, or hyphens
+        suggested = re.sub(r'[^a-z0-9-]', '', suggested)
+        # Remove multiple consecutive hyphens
+        suggested = re.sub(r'-+', '-', suggested)
+        # Remove leading/trailing hyphens
+        suggested = suggested.strip('-')
+        return suggested
 
     def _validate_description_quality(self):
         """Check description quality and best practices"""
