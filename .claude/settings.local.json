@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:support.claude.com)",
+      "Bash(tree:*)",
+      "Read(//Users/season/.claude/**)",
+      "Bash(git -C /Users/season/Experiments/claude-skills log --oneline -10)",
+      "Bash(git -C /Users/season/Experiments/claude-skills remote:*)",
+      "Read(//Users/season/**)",
+      "Bash(claude --version:*)",
+      "Bash(python:*)",
+      "Bash(unzip:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
