@@ -16,7 +16,8 @@
       "Bash(env)",
       "Bash(curl:*)",
       "Bash(python3:*)",
-      "Bash(chmod:*)"
+      "Bash(chmod:*)",
+      "WebFetch(domain:docs.n8n.io)"
     ],
     "deny": [],
     "ask": []
