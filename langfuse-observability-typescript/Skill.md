@@ -1,5 +1,5 @@
 ---
-name: langfuse-typescript-observability
+name: langfuse-observability-typescript
 description: "Integrates LangFuse Observability (TypeScript SDK v4) into OpenAI, Vercel AI SDK, and LangChain.js. Tracing, monitoring, serverless patterns, cost tracking for Node.js/Next.js LLM apps."
 ---
 
