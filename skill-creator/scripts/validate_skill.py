@@ -25,6 +25,12 @@ import sys
 from pathlib import Path
 from typing import List, Tuple
 
+try:
+    import yaml
+    HAS_YAML = True
+except ImportError:
+    HAS_YAML = False
+
 
 class ValidationIssue:
     """Represents a validation issue"""
@@ -120,7 +126,36 @@ class SkillValidator:
 
         yaml_content = parts[1].strip()
 
-        # Parse YAML manually (simple key: value format)
+        # Try to parse with pyyaml if available, otherwise use simple parser
+        if HAS_YAML:
+            try:
+                self.metadata = yaml.safe_load(yaml_content)
+                if not isinstance(self.metadata, dict):
+                    self.issues.append(ValidationIssue(
+                        'error',
+                        "YAML frontmatter must be a dictionary/object",
+                        "Ensure frontmatter contains key: value pairs"
+                    ))
+                    self.metadata = {}
+            except yaml.YAMLError as e:
+                self.issues.append(ValidationIssue(
+                    'error',
+                    f"Invalid YAML syntax: {e}",
+                    "Check YAML formatting, indentation, and special characters"
+                ))
+                self.metadata = {}
+        else:
+            # Fallback to simple parser (doesn't support nested structures)
+            self._parse_yaml_simple(yaml_content)
+            if self.metadata:
+                self.issues.append(ValidationIssue(
+                    'info',
+                    "Using simple YAML parser (install pyyaml for better validation)",
+                    "Run: pip install pyyaml"
+                ))
+
+    def _parse_yaml_simple(self, yaml_content: str):
+        """Simple YAML parser fallback (doesn't support nested structures)"""
         for line in yaml_content.split('\n'):
             line = line.strip()
             if not line or line.startswith('#'):
@@ -134,23 +169,20 @@ class SkillValidator:
                 ))
                 continue
 
+            # Skip lines that look like nested structures
+            if line.startswith('-') or line.endswith(':'):
+                continue
+
             key, value = line.split(':', 1)
             key = key.strip()
             value = value.strip()
+
+            # Remove quotes if present
+            if value and ((value.startswith('"') and value.endswith('"')) or
+                         (value.startswith("'") and value.endswith("'"))):
+                value = value[1:-1]
+
             self.metadata[key] = value
-
-            # Check if value contains special YAML characters and isn't quoted
-            if key in ['description', 'name'] and value:
-                has_special_chars = any(char in value for char in [':', ';', '[', ']', '{', '}', '#'])
-                is_quoted = (value.startswith('"') and value.endswith('"')) or \
-                           (value.startswith("'") and value.endswith("'"))
-
-                if has_special_chars and not is_quoted:
-                    self.issues.append(ValidationIssue(
-                        'error',
-                        f"Field '{key}' contains special YAML characters but is not quoted",
-                        f"Wrap the {key} value in double quotes: {key}: \"your value here\""
-                    ))
 
     def _validate_required_fields(self):
         """Validate required metadata fields are present"""

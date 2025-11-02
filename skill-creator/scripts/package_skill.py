@@ -19,6 +19,13 @@ import sys
 import zipfile
 from pathlib import Path
 
+# Import validator from the same directory
+try:
+    from validate_skill import SkillValidator
+    HAS_VALIDATOR = True
+except ImportError:
+    HAS_VALIDATOR = False
+
 
 def validate_skill_directory(skill_path: Path) -> tuple[bool, str]:
     """
@@ -116,6 +123,51 @@ def get_output_path(skill_path: Path, output_arg: str = None) -> Path:
     return output_path
 
 
+def run_validation(skill_path: Path, skip_validation: bool) -> bool:
+    """
+    Run validation on the skill before packaging.
+
+    Args:
+        skill_path: Path to the skill directory
+        skip_validation: Whether to skip validation
+
+    Returns:
+        True if validation passed or was skipped, False if validation failed
+    """
+    if skip_validation:
+        print("⚠️  Skipping validation (--skip-validation flag used)")
+        return True
+
+    if not HAS_VALIDATOR:
+        print("⚠️  Validator not available - skipping validation")
+        print("   (validate_skill.py not found in the same directory)")
+        return True
+
+    print("\n🔍 Validating skill before packaging...")
+    validator = SkillValidator(skill_path)
+    is_valid = validator.validate()
+
+    # Show validation report
+    errors = [i for i in validator.issues if i.level == 'error']
+    warnings = [i for i in validator.issues if i.level == 'warning']
+
+    if errors:
+        print("\n❌ Validation failed with errors:\n")
+        for error in errors:
+            print(f"  {error}\n")
+        print("Fix these errors before packaging, or use --skip-validation to package anyway.")
+        return False
+
+    if warnings:
+        print(f"\n⚠️  Validation passed with {len(warnings)} warning(s)")
+        for warning in warnings:
+            print(f"  {warning}\n")
+    else:
+        print("✅ Validation passed with no issues")
+
+    return True
+
+
 def main():
     parser = argparse.ArgumentParser(
         description='Package a Claude Code skill into a ZIP file',
@@ -150,6 +202,12 @@ The ZIP structure will be:
         help='Overwrite existing ZIP file without prompting'
     )
 
+    parser.add_argument(
+        '--skip-validation',
+        action='store_true',
+        help='Skip validation checks before packaging (not recommended)'
+    )
+
     args = parser.parse_args()
 
     # Convert to Path object and resolve to absolute path
@@ -164,6 +222,11 @@ The ZIP structure will be:
         return 1
 
     print("✅ Skill directory validated")
+
+    # Run validation checks
+    validation_passed = run_validation(skill_path, args.skip_validation)
+    if not validation_passed:
+        return 1
 
     # Determine output path
     output_path = get_output_path(skill_path, args.output)

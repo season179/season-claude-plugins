@@ -1,6 +1,6 @@
 ---
 name: skill-creator
-description: Creates, validates, and packages Claude Code custom skills using templates, automation scripts, and best practices guidance.
+description: Creates and debugs Claude Code skills. Validates frontmatter, checks ZIP structure, packages correctly, provides templates, and ensures best practices for skill invocation.
 ---
 
 # Skill Creator
@@ -12,14 +12,44 @@ A comprehensive tool for creating high-quality Claude Code custom skills. This s
 - Avoid verbose explanations unless explicitly requested
 - Focus on actionable steps and key details
 
-## What This Skill Does
+## When to Use This Skill
 
-This skill helps you:
-- **Scaffold new skills** with proper structure and metadata
-- **Validate skill definitions** before packaging
-- **Package skills correctly** into ZIP files
-- **Write effective descriptions** that help Claude invoke your skills at the right time
-- **Follow best practices** for skill organization and testing
+Use this skill when you need to:
+- **Create a new Claude Code skill** from scratch
+- **Debug why a skill isn't being invoked** properly
+- **Validate skill structure and metadata** before uploading
+- **Package skills correctly** into ZIP format for Claude Code
+- **Fix frontmatter errors** or invalid field configurations
+- **Learn best practices** for skill descriptions and organization
+
+Also useful when improving existing skills or understanding skill architecture.
+
+## Common Gotchas
+
+**Before you start, avoid these common mistakes:**
+
+1. **Invalid top-level fields** - Never use `version`, `author`, or `dependencies` at the top level
+   - ❌ `version: 1.0.0` (top level)
+   - ✅ `metadata:` with `version: 1.0.0` nested inside
+   - Or document in README.md instead
+
+2. **Wrong ZIP structure** - The ZIP must contain the skill folder as root
+   - ✅ `skill-name.zip` → `skill-name/` → `Skill.md`
+   - ❌ `skill-name.zip` → `Skill.md` (missing folder wrapper)
+   - Use `package_skill.py` to ensure correct structure
+
+3. **Generic descriptions won't trigger** - Be specific with action verbs
+   - ❌ "Helps with code" or "A useful tool"
+   - ✅ "Analyzes Python code for security vulnerabilities and suggests fixes"
+
+4. **Name format must be lowercase-with-hyphens**
+   - ❌ `Python Analyzer`, `API_Helper`, `My Skill!`
+   - ✅ `python-analyzer`, `api-helper`, `my-skill`
+   - The validator will auto-suggest corrections
+
+5. **Description length limit** - Maximum 200 characters
+   - Keep it concise and action-focused
+   - Every word should earn its place
 
 ## Quick Start Guide
 
