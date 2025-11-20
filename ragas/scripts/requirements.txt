@@ -1,0 +1,21 @@
+# Core Ragas dependencies
+ragas>=0.2.0
+langchain>=0.1.0
+langchain-openai>=0.0.5
+langchain-community>=0.0.20
+
+# Document loading
+unstructured>=0.10.0
+pdfminer.six>=20221105
+
+# Progress and utilities
+tqdm>=4.65.0
+
+# Data analysis
+scikit-learn>=1.0.0
+numpy>=1.21.0
+
+# Optional: For advanced features
+# langchain-anthropic  # For Claude models
+# langchain-google-genai  # For Gemini models
+# llama-index>=0.9.0  # For LlamaIndex integration

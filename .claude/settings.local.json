@@ -17,7 +17,9 @@
       "Bash(curl:*)",
       "Bash(python3:*)",
       "Bash(chmod:*)",
-      "WebFetch(domain:docs.n8n.io)"
+      "WebFetch(domain:docs.n8n.io)",
+      "Bash(playwright --version:*)",
+      "Bash(playwright show-trace:*)"
     ],
     "deny": [],
     "ask": []
