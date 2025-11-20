@@ -46,13 +46,12 @@ documents = loader.load()
 
 ```python
 from ragas.testset.generator import TestsetGenerator
-from ragas.llms import LangchainLLMWrapper
-from ragas.embeddings import LangchainEmbeddingsWrapper
-from langchain_openai import ChatOpenAI, OpenAIEmbeddings
+from ragas.llms import llm_factory
+from langchain_openai import OpenAIEmbeddings
 
-# Initialize LLM and embeddings
-generator_llm = LangchainLLMWrapper(ChatOpenAI(model="gpt-4o"))
-generator_embeddings = LangchainEmbeddingsWrapper(OpenAIEmbeddings())
+# Initialize LLM and embeddings (auto-wrapped)
+generator_llm = llm_factory("gpt-4o")
+generator_embeddings = OpenAIEmbeddings()  # Auto-wrapped by Ragas
 
 # Create generator
 generator = TestsetGenerator(
@@ -163,9 +162,11 @@ Use separate LLMs for generation and quality assessment:
 
 ```python
 from ragas.testset.generator import TestsetGenerator
+from ragas.llms import llm_factory
 
-generator_llm = LangchainLLMWrapper(ChatOpenAI(model="gpt-3.5-turbo"))
-critic_llm = LangchainLLMWrapper(ChatOpenAI(model="gpt-4o"))
+# Use different quality models for different roles
+generator_llm = llm_factory("gpt-4o-mini")  # Cheaper for generation
+critic_llm = llm_factory("gpt-4o")  # Higher quality for validation
 
 generator = TestsetGenerator.from_langchain(
     generator_llm=generator_llm,

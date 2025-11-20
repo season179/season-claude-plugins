@@ -22,8 +22,7 @@ try:
     from langchain_text_splitters import RecursiveCharacterTextSplitter
     from ragas.testset.generator import TestsetGenerator
     from ragas.testset.evolutions import simple, reasoning, multi_context
-    from ragas.llms import LangchainLLMWrapper
-    from langchain_openai import ChatOpenAI
+    from ragas.llms import llm_factory
     from tqdm import tqdm
 except ImportError as e:
     print(f"Error: Missing required dependencies. Run: pip install -r requirements.txt")
@@ -110,8 +109,8 @@ def generate_testset(
     print(f"\n🤖 Generating testset with {model}")
     print(f"Target size: {size} samples")
 
-    # Setup generator LLM
-    generator_llm = LangchainLLMWrapper(ChatOpenAI(model=model, temperature=0.7))
+    # Setup generator LLM (using modern llm_factory)
+    generator_llm = llm_factory(model)
     generator = TestsetGenerator(llm=generator_llm)
 
     # Set default distributions if not provided

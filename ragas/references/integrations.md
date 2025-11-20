@@ -11,7 +11,7 @@ Ragas integrates seamlessly with popular LLM frameworks and observability tools,
 ```python
 from langchain_openai import ChatOpenAI
 from langchain.chains import RetrievalQA
-from ragas.llms import LangchainLLMWrapper
+# LangChain objects are auto-wrapped by Ragas - no explicit wrapper needed
 ```
 
 ### Evaluating LangChain RAG Pipeline

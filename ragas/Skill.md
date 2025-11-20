@@ -10,9 +10,9 @@ allowed-tools:
   - mcp__deepwiki__ask_question
   - mcp__deepwiki__read_wiki_contents
 metadata:
-  version: 1.1.0
+  version: 1.2.0
   author: Season
-  dependencies: "python>=3.8, ragas>=0.2.0"
+  dependencies: "python>=3.8, ragas>=0.3.0"
   frameworks: "LangChain, LlamaIndex, Langfuse, Phoenix"
 ---
 
@@ -65,12 +65,28 @@ When this skill is invoked, follow these steps:
 
 Ragas is a comprehensive framework for evaluating RAG (Retrieval-Augmented Generation) applications using reference-free, LLM-based metrics. It provides both evaluation capabilities and synthetic test data generation, enabling systematic assessment of retrieval quality and generation faithfulness without requiring extensive human-annotated ground truth data.
 
-**⚠️ Version 0.2 Breaking Changes:**
-This skill uses Ragas v0.2, which introduced significant breaking changes from v0.1:
+**⚠️ Version 0.2+ Breaking Changes:**
+This skill uses Ragas v0.2+, which introduced significant breaking changes from v0.1:
 - **Dataset API**: Now uses `EvaluationDataset` instead of HuggingFace Datasets
 - **Metric Scoring**: Use `single_turn_ascore()` instead of deprecated `ascore()`
 - **LLM Configuration**: Metrics now require LLM at initialization, not during `evaluate()`
 - For migration from v0.1, see: https://docs.ragas.io/en/stable/howtos/migrations/migrate_from_v01_to_v02/
+
+**⚠️ Version 0.3+ LLM Initialization:**
+As of Ragas v0.3, the recommended approach for LLM initialization has changed:
+- **Preferred**: Use `llm_factory()` for OpenAI, Anthropic, and Google models
+- **Alternative**: Pass LangChain LLM objects directly (auto-wrapped internally)
+- **Deprecated**: `LangchainLLMWrapper` still works but is deprecated
+
+```python
+# Modern approach (v0.3+)
+from ragas.llms import llm_factory
+evaluator_llm = llm_factory("gpt-4o")
+
+# Or pass LangChain LLM directly (auto-wrapped)
+from langchain_openai import ChatOpenAI
+evaluator_llm = ChatOpenAI(model="gpt-4o")
+```
 
 ## Core Capabilities
 
@@ -94,11 +110,10 @@ Ragas provides specialized metrics to evaluate RAG pipelines component-wise and 
 ```python
 from ragas import evaluate
 from ragas.metrics import Faithfulness, AnswerRelevancy, ContextPrecision
-from ragas.llms import LangchainLLMWrapper
-from langchain_openai import ChatOpenAI
+from ragas.llms import llm_factory
 
-# Setup evaluator LLM
-evaluator_llm = LangchainLLMWrapper(ChatOpenAI(model="gpt-4o"))
+# Setup evaluator LLM (modern approach)
+evaluator_llm = llm_factory("gpt-4o")
 
 # Prepare evaluation dataset
 dataset = [
@@ -128,14 +143,14 @@ Generate diverse test datasets from documents without manual annotation:
 ```python
 from ragas.testset.generator import TestsetGenerator
 from langchain_community.document_loaders import DirectoryLoader
-from ragas.llms import LangchainLLMWrapper
+from ragas.llms import llm_factory
 
 # Load documents
 loader = DirectoryLoader("path/to/docs", glob="**/*.md")
 docs = loader.load()
 
 # Setup generator
-generator_llm = LangchainLLMWrapper(ChatOpenAI(model="gpt-4o"))
+generator_llm = llm_factory("gpt-4o")
 generator = TestsetGenerator(llm=generator_llm)
 
 # Generate synthetic testset
@@ -160,8 +175,8 @@ python scripts/generate_testset.py docs/ --size 50 --output testset.json
 Ragas integrates seamlessly with popular frameworks:
 
 **LangChain Integration:**
-- Use `LangchainLLMWrapper` for LLMs
-- Use `LangchainEmbeddingsWrapper` for embeddings
+- Pass LangChain LLMs directly (auto-wrapped internally)
+- Pass LangChain Embeddings directly (auto-wrapped internally)
 - Integrate with LangSmith for experiment tracking
 
 **LlamaIndex Integration:**
@@ -209,19 +224,17 @@ from ragas.llms import llm_factory
 evaluator_llm = llm_factory("gpt-4o")
 ```
 
-**Azure OpenAI:**
+**Anthropic Claude:**
 ```python
-from langchain_openai import AzureChatOpenAI
-from ragas.llms import LangchainLLMWrapper
+from ragas.llms import llm_factory
 
-evaluator_llm = LangchainLLMWrapper(AzureChatOpenAI(
-    azure_endpoint="https://your-endpoint.openai.azure.com/",
-    azure_deployment="your-deployment",
-    model="gpt-4o"
-))
+evaluator_llm = llm_factory(
+    "claude-3-5-sonnet-20241022",
+    provider="anthropic"
+)
 ```
 
-**AWS Bedrock, Anthropic Claude, Google Gemini, Local Models (Ollama):** See references/llm_providers.md
+**Azure OpenAI, AWS Bedrock, Google Gemini, Local Models (Ollama):** See references/llm_providers.md for detailed configuration
 
 ### 6. Agent Evaluation
 

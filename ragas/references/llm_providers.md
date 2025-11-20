@@ -2,7 +2,12 @@
 
 ## Overview
 
-Ragas supports multiple LLM providers through wrappers. This guide covers configuration for major providers and best practices for selecting evaluator LLMs.
+Ragas supports multiple LLM providers. As of v0.3+, there are three approaches:
+1. **`llm_factory()`** - Preferred for OpenAI, Anthropic, Google, Ollama
+2. **Direct LangChain/LlamaIndex objects** - Auto-wrapped internally (for unsupported providers)
+3. **Explicit wrappers** - Deprecated but still functional
+
+This guide covers configuration for major providers and best practices for selecting evaluator LLMs.
 
 ## Quick Configuration with llm_factory
 
@@ -26,44 +31,62 @@ llm = llm_factory("mistral", provider="ollama", base_url="http://localhost:11434
 
 ## OpenAI
 
-### Basic Configuration
+### Basic Configuration (Preferred - v0.3+)
+
+```python
+from ragas.llms import llm_factory
+
+# Simple factory approach
+llm = llm_factory("gpt-4o")
+
+# With custom configuration
+llm = llm_factory(
+    "gpt-4o",
+    temperature=0.0
+)
+```
+
+### Alternative: Auto-Wrapped LangChain
 
 ```python
 from langchain_openai import ChatOpenAI
-from ragas.llms import LangchainLLMWrapper
 
-llm = LangchainLLMWrapper(ChatOpenAI(
+# Pass directly - Ragas auto-wraps this internally
+llm = ChatOpenAI(
     model="gpt-4o",
     temperature=0.0,
     api_key="your-api-key"  # Or set OPENAI_API_KEY env var
-))
+)
 ```
 
 ### With Embeddings
 
 ```python
 from langchain_openai import OpenAIEmbeddings
-from ragas.embeddings import LangchainEmbeddingsWrapper
 
-embeddings = LangchainEmbeddingsWrapper(OpenAIEmbeddings(
+# Pass directly - auto-wrapped internally
+embeddings = OpenAIEmbeddings(
     model="text-embedding-3-large",
     api_key="your-api-key"
-))
+)
 ```
 
 ### Cost Optimization
 
 ```python
-# Use GPT-3.5 for development
-dev_llm = LangchainLLMWrapper(ChatOpenAI(model="gpt-3.5-turbo"))
+from ragas.llms import llm_factory
 
-# Use GPT-4 for production evaluation
-prod_llm = LangchainLLMWrapper(ChatOpenAI(model="gpt-4o"))
+# Use GPT-4o-mini for development
+dev_llm = llm_factory("gpt-4o-mini")
+
+# Use GPT-4o for production evaluation
+prod_llm = llm_factory("gpt-4o")
 
 # Use smaller embedding model
-embeddings = LangchainEmbeddingsWrapper(OpenAIEmbeddings(
+from langchain_openai import OpenAIEmbeddings
+embeddings = OpenAIEmbeddings(
     model="text-embedding-3-small"  # Cheaper alternative
-))
+)
 ```
 
 **Model recommendations:**
@@ -73,15 +96,15 @@ embeddings = LangchainEmbeddingsWrapper(OpenAIEmbeddings(
 
 ## Azure OpenAI
 
-### Configuration
+### Configuration (Auto-Wrapped)
+
+Azure OpenAI is not yet supported by `llm_factory`, so pass LangChain objects directly (auto-wrapped internally):
 
 ```python
 from langchain_openai import AzureChatOpenAI, AzureOpenAIEmbeddings
-from ragas.llms import LangchainLLMWrapper
-from ragas.embeddings import LangchainEmbeddingsWrapper
 
-# Configure LLM
-azure_llm = LangchainLLMWrapper(AzureChatOpenAI(
+# Configure LLM (auto-wrapped by Ragas)
+azure_llm = AzureChatOpenAI(
     openai_api_version="2023-05-15",
     azure_endpoint="https://your-endpoint.openai.azure.com/",
     azure_deployment="your-deployment-name",
@@ -89,16 +112,16 @@ azure_llm = LangchainLLMWrapper(AzureChatOpenAI(
     temperature=0.0,
     api_key="your-azure-api-key",  # Or set AZURE_OPENAI_API_KEY
     validate_base_url=False
-))
+)
 
-# Configure embeddings
-azure_embeddings = LangchainEmbeddingsWrapper(AzureOpenAIEmbeddings(
+# Configure embeddings (auto-wrapped by Ragas)
+azure_embeddings = AzureOpenAIEmbeddings(
     openai_api_version="2023-05-15",
     azure_endpoint="https://your-endpoint.openai.azure.com/",
     azure_deployment="your-embedding-deployment",
     model="text-embedding-3-large",
     api_key="your-azure-api-key"
-))
+)
 ```
 
 ### Environment Variables
@@ -110,27 +133,42 @@ export AZURE_OPENAI_API_VERSION="2023-05-15"
 ```
 
 ```python
-# Use without explicit credentials
-azure_llm = LangchainLLMWrapper(AzureChatOpenAI(
+# Use without explicit credentials (auto-wrapped)
+azure_llm = AzureChatOpenAI(
     azure_deployment="your-deployment-name",
     model="gpt-4o"
-))
+)
 ```
 
 ## Anthropic Claude
 
-### Configuration
+### Configuration (Preferred - v0.3+)
+
+```python
+from ragas.llms import llm_factory
+
+# Using factory (preferred)
+claude_llm = llm_factory(
+    "claude-3-5-sonnet-20241022",
+    provider="anthropic"
+)
+
+# Set API key via environment variable
+# export ANTHROPIC_API_KEY="your-anthropic-api-key"
+```
+
+### Alternative: Auto-Wrapped LangChain
 
 ```python
 from langchain_anthropic import ChatAnthropic
-from ragas.llms import LangchainLLMWrapper
 
-claude_llm = LangchainLLMWrapper(ChatAnthropic(
+# Pass directly - auto-wrapped internally
+claude_llm = ChatAnthropic(
     model="claude-3-5-sonnet-20241022",
     temperature=0.0,
     api_key="your-anthropic-api-key",  # Or set ANTHROPIC_API_KEY
     max_tokens=4096
-))
+)
 ```
 
 **Model recommendations:**
@@ -141,19 +179,22 @@ claude_llm = LangchainLLMWrapper(ChatAnthropic(
 **Note:** Claude doesn't provide native embeddings. Use OpenAI or other providers for embedding models.
 
 ```python
+from ragas.llms import llm_factory
+from langchain_openai import OpenAIEmbeddings
+
 # Claude for LLM, OpenAI for embeddings
-claude_llm = LangchainLLMWrapper(ChatAnthropic(model="claude-3-5-sonnet-20241022"))
-openai_embeddings = LangchainEmbeddingsWrapper(OpenAIEmbeddings())
+claude_llm = llm_factory("claude-3-5-sonnet-20241022", provider="anthropic")
+openai_embeddings = OpenAIEmbeddings()  # Auto-wrapped
 ```
 
 ## AWS Bedrock
 
-### Configuration
+### Configuration (Auto-Wrapped)
+
+AWS Bedrock is not yet supported by `llm_factory`, so pass LangChain objects directly (auto-wrapped internally):
 
 ```python
 from langchain_aws import ChatBedrockConverse, BedrockEmbeddings
-from ragas.llms import LangchainLLMWrapper
-from ragas.embeddings import LangchainEmbeddingsWrapper
 
 config = {
     "credentials_profile_name": "default",
@@ -163,20 +204,20 @@ config = {
     "temperature": 0.4
 }
 
-# Configure LLM
-bedrock_llm = LangchainLLMWrapper(ChatBedrockConverse(
+# Configure LLM (auto-wrapped by Ragas)
+bedrock_llm = ChatBedrockConverse(
     credentials_profile_name=config["credentials_profile_name"],
     region_name=config["region_name"],
     model=config["llm"],
     temperature=config["temperature"]
-))
+)
 
-# Configure embeddings
-bedrock_embeddings = LangchainEmbeddingsWrapper(BedrockEmbeddings(
+# Configure embeddings (auto-wrapped by Ragas)
+bedrock_embeddings = BedrockEmbeddings(
     credentials_profile_name=config["credentials_profile_name"],
     region_name=config["region_name"],
     model_id=config["embeddings"]
-))
+)
 ```
 
 **Available models on Bedrock:**
@@ -207,17 +248,32 @@ bedrock_embeddings = LangchainEmbeddingsWrapper(BedrockEmbeddings(
 
 ## Google Gemini
 
-### Configuration
+### Configuration (Preferred - v0.3+)
+
+```python
+from ragas.llms import llm_factory
+
+# Using factory (preferred)
+gemini_llm = llm_factory(
+    "gemini-1.5-pro",
+    provider="google"
+)
+
+# Set API key via environment variable
+# export GOOGLE_API_KEY="your-google-api-key"
+```
+
+### Alternative: Auto-Wrapped LangChain
 
 ```python
 from langchain_google_genai import ChatGoogleGenerativeAI
-from ragas.llms import LangchainLLMWrapper
 
-gemini_llm = LangchainLLMWrapper(ChatGoogleGenerativeAI(
+# Pass directly - auto-wrapped internally
+gemini_llm = ChatGoogleGenerativeAI(
     model="gemini-1.5-pro",
     temperature=0.0,
     google_api_key="your-google-api-key"  # Or set GOOGLE_API_KEY
-))
+)
 ```
 
 **Model recommendations:**
@@ -237,17 +293,30 @@ ollama pull mistral
 ollama pull llama2
 ```
 
-### Configuration
+### Configuration (Preferred - v0.3+)
+
+```python
+from ragas.llms import llm_factory
+
+# Using factory (preferred)
+ollama_llm = llm_factory(
+    "mistral",
+    provider="ollama",
+    base_url="http://localhost:11434"
+)
+```
+
+### Alternative: Auto-Wrapped LangChain
 
 ```python
 from langchain_ollama import ChatOllama
-from ragas.llms import LangchainLLMWrapper
 
-ollama_llm = LangchainLLMWrapper(ChatOllama(
+# Pass directly - auto-wrapped internally
+ollama_llm = ChatOllama(
     model="mistral",
     base_url="http://localhost:11434",
     temperature=0.0
-))
+)
 ```
 
 **Model recommendations (7B+ parameters):**
@@ -282,17 +351,17 @@ custom_llm = llm_factory(
 )
 ```
 
-Or use LangChain's generic interfaces:
+Or use LangChain's generic interfaces (auto-wrapped):
 
 ```python
 from langchain.chat_models import ChatOpenAI  # Works with OpenAI-compatible APIs
-from ragas.llms import LangchainLLMWrapper
 
-custom_llm = LangchainLLMWrapper(ChatOpenAI(
+# Pass directly - auto-wrapped internally
+custom_llm = ChatOpenAI(
     model="model-name",
     openai_api_base="https://your-endpoint/v1",
     openai_api_key="your-key"
-))
+)
 ```
 
 ## LlamaIndex Integration
@@ -379,30 +448,37 @@ llm = LlamaIndexLLMWrapper(OpenAI(
 
 ```python
 import os
-from langchain_openai import ChatOpenAI
-from ragas.llms import LangchainLLMWrapper
+from ragas.llms import llm_factory
 
 def get_evaluator_llm():
-    """Production-ready LLM configuration."""
-    return LangchainLLMWrapper(ChatOpenAI(
+    """Production-ready LLM configuration (v0.3+)."""
+    # Using factory approach
+    return llm_factory("gpt-4o")
+
+def get_evaluator_llm_advanced():
+    """Production-ready with advanced LangChain config."""
+    from langchain_openai import ChatOpenAI
+
+    # Auto-wrapped by Ragas
+    return ChatOpenAI(
         model="gpt-4o",
         temperature=0.0,
         api_key=os.getenv("OPENAI_API_KEY"),
         max_retries=3,
         request_timeout=60,
         max_tokens=2000
-    ))
+    )
 
 def get_embeddings():
     """Production-ready embeddings configuration."""
     from langchain_openai import OpenAIEmbeddings
-    from ragas.embeddings import LangchainEmbeddingsWrapper
-    
-    return LangchainEmbeddingsWrapper(OpenAIEmbeddings(
+
+    # Auto-wrapped by Ragas
+    return OpenAIEmbeddings(
         model="text-embedding-3-large",
         api_key=os.getenv("OPENAI_API_KEY"),
         chunk_size=1000
-    ))
+    )
 ```
 
 ## Troubleshooting
@@ -411,11 +487,12 @@ def get_embeddings():
 ```python
 from langchain_openai import ChatOpenAI
 
-llm = LangchainLLMWrapper(ChatOpenAI(
+# Auto-wrapped by Ragas
+llm = ChatOpenAI(
     model="gpt-4o",
     max_retries=5,
     request_timeout=120
-))
+)
 ```
 
 **API Errors:**
@@ -426,9 +503,11 @@ llm = LangchainLLMWrapper(ChatOpenAI(
 
 **Cost Management:**
 ```python
+from ragas.llms import llm_factory
+
 # Use cheaper models for less critical metrics
-fast_llm = LangchainLLMWrapper(ChatOpenAI(model="gpt-3.5-turbo"))
-quality_llm = LangchainLLMWrapper(ChatOpenAI(model="gpt-4o"))
+fast_llm = llm_factory("gpt-4o-mini")
+quality_llm = llm_factory("gpt-4o")
 
 # Assign appropriately
 from ragas.metrics import Faithfulness, AnswerCorrectness

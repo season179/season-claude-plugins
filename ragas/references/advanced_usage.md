@@ -470,9 +470,8 @@ pipeline = HuggingFacePipeline(
     tokenizer=tokenizer
 )
 
-# Use with Ragas
-from ragas.llms import LangchainLLMWrapper
-llm = LangchainLLMWrapper(pipeline)
+# Use with Ragas (auto-wrapped internally)
+llm = pipeline  # Pass directly - Ragas auto-wraps LangChain LLMs
 ```
 
 ## Advanced Dataset Management
