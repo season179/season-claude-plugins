@@ -34,6 +34,7 @@ Then install individual plugins:
 |--------|-------------|
 | **designing-web-app-ux** | Web application UI/UX patterns and accessibility |
 | **design-system-extractor** | Extract design tokens from websites/screenshots |
+| **data-table-patterns** | TanStack Table patterns with shadcn/ui (grouping, pinning, filtering) |
 | **creating-mermaid-diagrams** | MermaidJS diagrams with proper layout |
 
 ### Developer Tools

@@ -19,7 +19,9 @@
       "Bash(chmod:*)",
       "WebFetch(domain:docs.n8n.io)",
       "Bash(playwright --version:*)",
-      "Bash(playwright show-trace:*)"
+      "Bash(playwright show-trace:*)",
+      "Bash(ls:*)",
+      "Bash(xargs:*)"
     ],
     "deny": [],
     "ask": []

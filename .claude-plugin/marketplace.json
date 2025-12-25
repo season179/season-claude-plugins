@@ -42,6 +42,14 @@
       "category": "documentation"
     },
     {
+      "name": "data-table-patterns",
+      "source": "./data-table-patterns",
+      "description": "Provides advanced TanStack Table patterns for React with shadcn/ui integration. Covers grouping, aggregation, column/row pinning, faceted filtering, and column visibility toggles. Triggers on requests for data grids, admin dashboards, financial tables, or when combining multiple TanStack Table features together.",
+      "author": { "name": "Season Saw" },
+      "keywords": ["tanstack-table", "react", "shadcn", "data-grid", "admin"],
+      "category": "design"
+    },
+    {
       "name": "design-system-extractor",
       "source": "./design-system-extractor",
       "description": "Extracts design tokens (colors, typography, spacing) and components from websites, screenshots, or descriptions into production-ready documentation. Use when creating design systems or documenting visual patterns.",
