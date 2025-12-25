@@ -1,9 +1,0 @@
-# Website Theme Generator - Python Dependencies
-
-# Core dependency for web automation
-playwright>=1.40.0
-
-# Note: After installing playwright, you must also install the browser:
-#   playwright install chromium
-#
-# Python version requirement: >= 3.8 (for async/await support)

@@ -1,0 +1,117 @@
+{
+  "name": "season-claude-plugins",
+  "owner": {
+    "name": "Season Saw",
+    "email": "season.saw@gmail.com"
+  },
+  "metadata": {
+    "description": "Claude Code skills for AI development, web app UX, observability, and productivity",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "ai-elements",
+      "source": "./ai-elements",
+      "description": "Provides React components and hooks for building AI chat interfaces with Vercel AI SDK. Covers useChat, useCompletion, useObject hooks for state management, plus pre-built UI components (Conversation, Message, PromptInput, Response, Tool, Reasoning) from shadcn/ui. Triggers on chatbots, conversational UIs, AI assistants, streaming responses, message.parts rendering, tool call UIs, generative UI, sendMessage, DefaultChatTransport, or production AI interface patterns with Next.js.",
+      "author": { "name": "Season Saw" },
+      "keywords": ["ai-sdk", "react", "chat", "streaming", "vercel", "shadcn"],
+      "category": "ai"
+    },
+    {
+      "name": "ai-sdk-agents",
+      "source": "./ai-sdk-agents",
+      "description": "Expert guidance for building AI agents using the Vercel AI SDK. Use this skill when building agents with tools, implementing agentic loops, creating workflow patterns (sequential, parallel, routing, orchestrator-worker, evaluator-optimizer), or configuring agent loop control (stopWhen, prepareStep). Triggers on requests involving AI SDK Agent class, tool definitions, multi-step agent workflows, or structured AI pipelines.",
+      "author": { "name": "Season Saw" },
+      "keywords": ["ai-sdk", "agents", "tools", "workflows", "vercel"],
+      "category": "ai"
+    },
+    {
+      "name": "biome-lint-advisor",
+      "source": "./biome-lint-advisor",
+      "description": "Analyzes Biome linting issues with context-aware reasoning, researches project patterns, and prioritizes fixes based on impact rather than blindly auto-fixing",
+      "author": { "name": "Season Saw" },
+      "keywords": ["biome", "linting", "code-quality", "typescript"],
+      "category": "developer-tools"
+    },
+    {
+      "name": "creating-mermaid-diagrams",
+      "source": "./creating-mermaid-diagrams",
+      "description": "Creates visually appealing MermaidJS diagrams with proper layout, alignment, and structure. Use when generating flowcharts, sequence diagrams, class diagrams, ER diagrams, state diagrams, Gantt charts, pie charts, mindmaps, or any MermaidJS visualization. Triggers on requests for diagrams, flowcharts, visual workflows, architecture diagrams, or when .mmd files are involved.",
+      "author": { "name": "Season Saw" },
+      "keywords": ["mermaid", "diagrams", "flowcharts", "visualization"],
+      "category": "documentation"
+    },
+    {
+      "name": "design-system-extractor",
+      "source": "./design-system-extractor",
+      "description": "Extracts design tokens (colors, typography, spacing) and components from websites, screenshots, or descriptions into production-ready documentation. Use when creating design systems or documenting visual patterns.",
+      "author": { "name": "Season Saw" },
+      "keywords": ["design-system", "tokens", "ui", "react", "tailwind"],
+      "category": "design"
+    },
+    {
+      "name": "designing-web-app-ux",
+      "source": "./designing-web-app-ux",
+      "description": "Expert guidance for building web application user interfaces with excellent user experience. Use when designing UI layouts, implementing user flows, creating accessible interfaces, building responsive designs, handling form interactions, designing navigation systems, or implementing feedback patterns. Triggers on requests involving dashboards, admin panels, SaaS interfaces, data-heavy apps, multi-step forms, complex navigation, or any web app requiring thoughtful UX decisions.",
+      "author": { "name": "Season Saw" },
+      "keywords": ["ux", "ui", "web-app", "accessibility", "responsive"],
+      "category": "design"
+    },
+    {
+      "name": "exa-search",
+      "source": "./exa-search",
+      "description": "Expert integration with Exa's AI-powered semantic search API. Use when building web search, RAG systems, content retrieval, or research features with TypeScript/Bun, React, and Next.js. Triggers on requests involving Exa API, Exa SDK, semantic web search, AI search tools, search and contents retrieval, find similar links, research automation, or Vercel AI SDK web search integration. Covers exa-js SDK, @exalabs/ai-sdk, search types (neural, auto, deep), content extraction, livecrawling, highlights, summaries, and structured research tasks.",
+      "author": { "name": "Season Saw" },
+      "keywords": ["exa", "search", "rag", "ai-sdk", "web-search"],
+      "category": "ai"
+    },
+    {
+      "name": "langfuse-observability-typescript",
+      "source": "./langfuse-observability-typescript",
+      "description": "Integrates Langfuse observability (TypeScript SDK v4) into Node.js/Next.js LLM applications. Covers OpenAI SDK, Vercel AI SDK, and LangChain.js tracing with OpenTelemetry. Use when setting up Langfuse tracing, monitoring LLM calls, tracking costs/tokens, or debugging LLM apps in TypeScript/JavaScript. Triggers: langfuse, tracing, observability, llm monitoring, opentelemetry, vercel ai sdk telemetry, langchain callback.",
+      "author": { "name": "Season Saw" },
+      "keywords": ["langfuse", "observability", "tracing", "opentelemetry", "llm"],
+      "category": "observability"
+    },
+    {
+      "name": "n8n-workflow-builder",
+      "source": "./n8n-workflow-builder",
+      "description": "Use when user asks to create, configure, or troubleshoot n8n workflows, nodes, or automation tasks. Provides current n8n documentation and node configuration guidance.",
+      "author": { "name": "Season Saw" },
+      "keywords": ["n8n", "workflow", "automation", "no-code"],
+      "category": "automation"
+    },
+    {
+      "name": "pino-logger",
+      "source": "./pino-logger",
+      "description": "Provides patterns and configuration for Pino, the high-performance JSON logger. Triggers when building logging systems, configuring transports, creating child loggers, implementing log redaction, integrating with Express/Fastify/Hono, or working with pino-http, pino-pretty, structured logging, request logging, or TypeScript/Bun logging setups.",
+      "author": { "name": "Season Saw" },
+      "keywords": ["pino", "logging", "typescript", "bun", "hono"],
+      "category": "developer-tools"
+    },
+    {
+      "name": "solution-architect-skill",
+      "source": "./solution-architect-skill",
+      "description": "Designs production systems using architecture styles (microservices, event-driven, CQRS, serverless), design patterns (circuit breaker, saga, outbox), and quality attributes (scalability, availability, performance). Implements with preferred stack: Cloudflare Workers, Hono, D1, AI SDK, WorkOS, Playwright, PostHog, GitHub Actions. Use when designing systems, evaluating architectural trade-offs, selecting technologies, planning APIs, modeling data, or making infrastructure decisions.",
+      "author": { "name": "Season Saw" },
+      "keywords": ["architecture", "system-design", "cloudflare", "microservices"],
+      "category": "architecture"
+    },
+    {
+      "name": "using-tavily-search",
+      "source": "./using-tavily-search",
+      "description": "Implements Tavily search, extract, crawl, and map APIs for AI-powered web search and content extraction. Use when building LLM search tools, RAG pipelines, web scraping, site crawlers, or content extraction features. Triggers on Tavily, @tavily/core, @tavily/ai-sdk, agentic search, web search API, or URL content extraction. Tech stack is Bun, TypeScript, Vercel AI SDK v5, Next.js.",
+      "author": { "name": "Season Saw" },
+      "keywords": ["tavily", "search", "rag", "web-scraping", "ai-sdk"],
+      "category": "ai"
+    },
+    {
+      "name": "xlsx",
+      "source": "./xlsx",
+      "description": "Reads, creates, edits, and analyzes Excel spreadsheets with full formula support, formatting, charts, and data validation. Triggers when working with .xlsx, .xlsm, .xls, .csv, or .tsv files for data analysis, spreadsheet creation, formula-based models, or modifying existing workbooks.",
+      "author": { "name": "Season Saw" },
+      "keywords": ["excel", "spreadsheet", "xlsx", "data-analysis", "python"],
+      "category": "productivity"
+    }
+  ]
+}

@@ -1,0 +1,206 @@
+{
+  "url": "https://www.ramseysolutions.com/dave-ramsey-7-baby-steps",
+  "colors": [
+    "#000000",
+    "#003561",
+    "#005b98",
+    "#0073b9",
+    "#1f2426",
+    "#495257",
+    "#69757a",
+    "#b6bec2",
+    "#d5d9db",
+    "#e8eced",
+    "#f5f7f8",
+    "#fcd214",
+    "#ffffff"
+  ],
+  "typography": {
+    "fontFamilies": [
+      "canada-type-gibson, Arial, sans-serif"
+    ],
+    "fontSizes": [
+      "16px",
+      "18px",
+      "14px",
+      "48px",
+      "20px",
+      "24px",
+      "34px",
+      "12px"
+    ],
+    "fontWeights": [
+      "400",
+      "600"
+    ],
+    "lineHeights": [
+      "18.4px",
+      "27px",
+      "18px",
+      "16px",
+      "14px",
+      "24px",
+      "20px",
+      "52.8px",
+      "25px",
+      "30px",
+      "22.5px",
+      "42.5px",
+      "15px",
+      "21px"
+    ]
+  },
+  "spacing": [
+    "12px",
+    "13px",
+    "16px",
+    "197.312px",
+    "197.328px",
+    "20px",
+    "24px",
+    "27px",
+    "32px",
+    "36px",
+    "40px",
+    "48px",
+    "4px",
+    "64px",
+    "72px",
+    "8px"
+  ],
+  "borderRadius": [
+    "0px 0px 16px 16px",
+    "16px",
+    "4px",
+    "8px",
+    "9999px"
+  ],
+  "shadows": [
+    "rgba(23, 73, 77, 0.15) 0px 20px 30px 0px",
+    "rgba(31, 36, 38, 0.1) 0px 2px 4px 0px inset, rgba(31, 36, 38, 0.1) 0px 2px 4px 0px",
+    "rgb(0, 115, 185) 0px 0px 0px 1px inset",
+    "rgba(31, 36, 38, 0.18) 0px 8px 24px 0px",
+    "rgba(31, 36, 38, 0.1) 0px 2px 4px 0px",
+    "rgba(31, 36, 38, 0.12) 0px 4px 16px 0px"
+  ],
+  "components": [
+    {
+      "type": "button",
+      "count": 37,
+      "samples": [
+        {
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "color": "rgb(0, 115, 185)",
+          "padding": "12px",
+          "borderRadius": "4px",
+          "fontSize": "16px",
+          "fontWeight": "600",
+          "border": "1px solid rgba(0, 0, 0, 0)"
+        },
+        {
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "color": "rgb(0, 115, 185)",
+          "padding": "12px",
+          "borderRadius": "4px",
+          "fontSize": "16px",
+          "fontWeight": "600",
+          "border": "1px solid rgba(0, 0, 0, 0)"
+        },
+        {
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "color": "rgb(31, 36, 38)",
+          "padding": "8px",
+          "borderRadius": "4px",
+          "fontSize": "14px",
+          "fontWeight": "600",
+          "border": "1px solid rgba(0, 0, 0, 0)"
+        },
+        {
+          "backgroundColor": "rgb(0, 115, 185)",
+          "color": "rgb(255, 255, 255)",
+          "padding": "12px",
+          "borderRadius": "4px",
+          "fontSize": "16px",
+          "fontWeight": "600",
+          "border": "1px solid rgba(0, 0, 0, 0)"
+        },
+        {
+          "backgroundColor": "rgba(0, 0, 0, 0)",
+          "color": "rgb(0, 115, 185)",
+          "padding": "12px",
+          "borderRadius": "4px",
+          "fontSize": "16px",
+          "fontWeight": "600",
+          "border": "1px solid rgba(0, 0, 0, 0)"
+        }
+      ]
+    },
+    {
+      "type": "input",
+      "count": 2,
+      "samples": [
+        {
+          "backgroundColor": "rgb(255, 255, 255)",
+          "color": "rgb(31, 36, 38)",
+          "padding": "12px 32px 12px 12px",
+          "borderRadius": "4px",
+          "border": "1px solid rgb(105, 117, 122)",
+          "fontSize": "16px"
+        },
+        {
+          "backgroundColor": "rgb(255, 255, 255)",
+          "color": "rgb(31, 36, 38)",
+          "padding": "12px 32px 12px 12px",
+          "borderRadius": "4px",
+          "border": "1px solid rgb(105, 117, 122)",
+          "fontSize": "16px"
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "count": 9,
+      "samples": [
+        {
+          "backgroundColor": "rgb(255, 255, 255)",
+          "padding": "0px",
+          "borderRadius": "16px",
+          "boxShadow": "rgba(31, 36, 38, 0.12) 0px 4px 16px 0px",
+          "border": "0px none rgb(31, 36, 38)"
+        },
+        {
+          "backgroundColor": "rgb(255, 255, 255)",
+          "padding": "0px",
+          "borderRadius": "16px",
+          "boxShadow": "rgba(31, 36, 38, 0.12) 0px 4px 16px 0px",
+          "border": "0px none rgb(31, 36, 38)"
+        },
+        {
+          "backgroundColor": "rgb(255, 255, 255)",
+          "padding": "0px",
+          "borderRadius": "16px",
+          "boxShadow": "rgba(31, 36, 38, 0.12) 0px 4px 16px 0px",
+          "border": "0px none rgb(31, 36, 38)"
+        },
+        {
+          "backgroundColor": "rgb(255, 255, 255)",
+          "padding": "0px",
+          "borderRadius": "16px",
+          "boxShadow": "rgba(31, 36, 38, 0.12) 0px 4px 16px 0px",
+          "border": "0px none rgb(31, 36, 38)"
+        },
+        {
+          "backgroundColor": "rgb(255, 255, 255)",
+          "padding": "0px",
+          "borderRadius": "16px",
+          "boxShadow": "rgba(31, 36, 38, 0.12) 0px 4px 16px 0px",
+          "border": "0px none rgb(31, 36, 38)"
+        }
+      ]
+    }
+  ],
+  "viewport": {
+    "width": 1280,
+    "height": 720
+  }
+}
